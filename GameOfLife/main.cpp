@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 
-#include "Cell.h"
+//#include "Cell.h"
 
 #define colorEmpty sf::Color::White
 #define colorAlive sf::Color::Red
