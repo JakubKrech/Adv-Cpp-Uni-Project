@@ -1,2 +1,2 @@
 # Adv-Cpp-Uni-Project
-Projects from Advances C++ University classes.
+**Conway's Game of Life** written in modern C++ (**C++17**)
