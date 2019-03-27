@@ -1,14 +1,24 @@
 #pragma once
-class Cell
+#include <SFML/Graphics.hpp>
+#include <vector>
+
+#define colorDead sf::Color::White
+#define colorAlive sf::Color::Red
+
+class Cell : public sf::RectangleShape
 {
 public:
-	/*static const int cellSize{ 4 };
-	int coordinateX;
-	int coordinateY;
-	bool alive = false;
+	int x, y;
+	bool isAlive = false;
+	enum direction { NW = 0, N, NE, E, SE, S, SW, W };
+	std::vector<Cell*> neighbors;
 
-	Cell(int x, int y) : coordinateX(x), coordinateY(y) {};
+public:
+	Cell(sf::Vector2f, sf::Vector2f, int, int);
+	~Cell();
+	
 
-	~Cell() {};*/
+	void setAlive();
+	void setDead();
 };
 
