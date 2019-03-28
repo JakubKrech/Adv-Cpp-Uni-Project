@@ -14,17 +14,18 @@ class Grid
 	int gridWidth, gridHeight;
 
 	void initializeCells();
-	void copyGridAliveStates(std::vector<std::vector<Cell>>&, std::vector<std::vector<Cell>>&);
+
 public:
 	std::vector<std::vector<Cell>> cellGrid;
-	std::vector<std::vector<Cell>> temp;
 
-	std::unique_ptr<sf::RenderWindow> window; //usunac raw pointer
+	std::unique_ptr<sf::RenderWindow> window;
 
 	Grid(int, int, int);
 	~Grid();
 
 	void calculateNextStep();
 	void spawnGlider(int, int);
+	void spawnFrog(int, int);
+	void spawnCopperhead(int xx, int yy);
 };
 

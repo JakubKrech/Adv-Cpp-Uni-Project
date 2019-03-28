@@ -2,30 +2,26 @@
 
 #include <iostream>
 
-Cell::Cell(sf::Vector2f size, sf::Vector2f position, int xx, int yy) : x{ xx }, y{ yy }
+Cell::Cell(sf::Vector2f size, sf::Vector2f position, int xx, int yy, sf::Color clr) : x{ xx }, y{ yy }//, color{clr}
 {
 	this->setSize(size);
 	this->setPosition(position);
-	this->setFillColor(colorDead);
+	this->setFillColor(clr);
 	neighbors.resize(8, NULL);
-
 }
 
 
 Cell::~Cell()
 {
-	//std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 }
 
-void Cell::setAlive()
+void Cell::setNextState(bool state)
 {
-	isAlive = true;
-	this->setFillColor(colorAlive);
+	nextState = state;
 }
 
-void Cell::setDead()
+void Cell::updateState()
 {
-	isAlive = false;
-	this->setFillColor(colorDead);
+	previousState = nextState;
 }
 
