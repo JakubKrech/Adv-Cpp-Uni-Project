@@ -10,13 +10,14 @@
 int main()
 {
 	Grid grid{ 800,800,8 };
-	//grid.window->setFramerateLimit(20);
-	Pattern pat{ "PatternsRLE/copperhead.rle" };
+	grid.window->setFramerateLimit(20);
 
+	std::vector<Pattern> patterns;
 	// TODO: create class that will act as container of Patterns, fill it this way
-	/*std::string path = "/path/to/directory";
-	for (const auto & entry : fs::directory_iterator(path))
-		std::cout << entry.path() << std::endl;*/
+	std::string path = "PatternsRLE";
+	for (const auto &entry : fs::directory_iterator(path)) {
+		patterns.push_back(Pattern { entry });
+	}
 
 	//blinker oscillators
 	/*grid.cellGrid[20][32].setNextState(true);
@@ -34,11 +35,31 @@ int main()
 	grid.spawnFrog(5, 5);*/
 
 	// Copperheads
-	grid.spawnCopperhead(5, 5);
+	/*grid.spawnCopperhead(5, 5);
 	grid.spawnCopperhead(25, 25);
 	grid.spawnCopperhead(45, 45);
 	grid.spawnCopperhead(65, 65);
-	grid.spawnCopperhead(85, 85);
+	grid.spawnCopperhead(85, 85);*/
+	grid.spawnPattern(patterns[3], 5, 10);
+	grid.spawnPattern(patterns[3], 25, 10);
+	grid.spawnPattern(patterns[3], 45, 10);
+	grid.spawnPattern(patterns[3], 65, 10);
+	grid.spawnPattern(patterns[3], 85, 10);
+
+	grid.spawnPattern(patterns[1], 15, 40);
+	grid.spawnPattern(patterns[1], 35, 40);
+	grid.spawnPattern(patterns[1], 55, 40);
+	grid.spawnPattern(patterns[1], 75, 40);
+
+	grid.spawnPattern(patterns[1], 25, 60);
+	grid.spawnPattern(patterns[1], 45, 60);
+	grid.spawnPattern(patterns[1], 65, 60);
+	grid.spawnPattern(patterns[1], 85, 60);
+
+	grid.spawnPattern(patterns[1], 15, 80);
+	grid.spawnPattern(patterns[1], 35, 80);
+	grid.spawnPattern(patterns[1], 55, 80);
+	grid.spawnPattern(patterns[1], 75, 80);
 
 	// 5 for marching gliders
 	// 3 for cool effect
@@ -68,7 +89,7 @@ int main()
 		}
 		grid.calculateNextStep();
 		grid.window->display();
-		//system("pause");
+		
 		
 		grid.window->clear();
 		std::cout << 1 / (float(clock() - begin_time) / CLOCKS_PER_SEC) << " fps" << 

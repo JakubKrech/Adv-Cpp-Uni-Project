@@ -158,3 +158,14 @@ void Grid::spawnCopperhead(int xx, int yy) // to be removed
 
 	cellGrid[xx + 5][yy + 9].setNextState(true);
 }
+
+void Grid::spawnPattern(Pattern pattern, int x, int y)
+{
+	for (size_t i = 0; i < pattern.height; i++)
+	{
+		for (size_t j = 0; j < pattern.width; j++)
+		{
+			cellGrid[x + i][y + j].nextState = pattern.cellPattern[j][i];
+		}
+	}
+}

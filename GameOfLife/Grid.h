@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Cell.h"
+#include "Pattern.h"
 
 
 
@@ -27,5 +28,7 @@ public:
 	void spawnGlider(int, int);
 	void spawnFrog(int, int);
 	void spawnCopperhead(int xx, int yy);
+	
+	void spawnPattern(Pattern, int, int);
 };
 
