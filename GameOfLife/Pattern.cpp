@@ -15,7 +15,8 @@ void Pattern::readFile(fs::path filePath)
 		std::string result(sz, ' ');
 
 		// Read the whole file into the buffer.
-		f.read(result.data(), sz);
+		//f.read(result.data(), sz);
+		f.read((char*)result.data(), sz);
 
 		fullInfo = result;
 	}
