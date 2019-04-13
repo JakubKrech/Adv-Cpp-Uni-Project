@@ -18,6 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Cell.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Pattern.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Cell.h" />
+    <ClInclude Include="src\Grid.h" />
+    <ClInclude Include="src\Pattern.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{8451C042-90EA-4497-9894-EADABADCAAE4}</ProjectGuid>
@@ -119,17 +130,6 @@
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pattern.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Cell.h" />
-    <ClInclude Include="Grid.h" />
-    <ClInclude Include="Pattern.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

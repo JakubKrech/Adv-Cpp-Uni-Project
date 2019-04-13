@@ -1,23 +1,28 @@
 #include <SFML/Graphics.hpp>
+
 #include <vector>
+#include <map>
 #include <iostream>
 #include <chrono>
 #include <thread>
 
-#include "Grid.h"
-#include "Pattern.h"
+#include "src\\Grid.h"
+#include "src\\Pattern.h"
 
 int main()
 {
 	Grid grid{ 800,800,8 };
 	grid.window->setFramerateLimit(30);
 
-	std::vector<Pattern> patterns;
+	std::map<std::string, Pattern> patterns;
 	// TODO: create class that will act as container of Patterns, fill it this way
-	std::string path = "PatternsRLE";
+	std::string path = "src\\PatternsRLE";
 	for (const auto &entry : fs::directory_iterator(path)) {
-		patterns.push_back(Pattern { entry });
+		Pattern newPattern{ entry };
+		patterns.insert(std::pair<std::string, Pattern>{ newPattern.name, newPattern});
 	}
+
+	grid.spawnPattern(patterns.find("Gosper glider gun")->second, 20, 20);
 
 	//blinker oscillators
 	/*grid.cellGrid[20][32].setNextState(true);
@@ -40,7 +45,7 @@ int main()
 	grid.spawnCopperhead(45, 45);
 	grid.spawnCopperhead(65, 65);
 	grid.spawnCopperhead(85, 85);*/
-	grid.spawnPattern(patterns[3], 5, 10);
+	/*grid.spawnPattern(patterns[3], 5, 10);
 	grid.spawnPattern(patterns[3], 25, 10);
 	grid.spawnPattern(patterns[3], 45, 10);
 	grid.spawnPattern(patterns[3], 65, 10);
@@ -59,7 +64,7 @@ int main()
 	grid.spawnPattern(patterns[1], 15, 80);
 	grid.spawnPattern(patterns[1], 35, 80);
 	grid.spawnPattern(patterns[1], 55, 80);
-	grid.spawnPattern(patterns[1], 75, 80);
+	grid.spawnPattern(patterns[1], 75, 80);*/
 
 	// 5 for marching gliders
 	// 3 for cool effect

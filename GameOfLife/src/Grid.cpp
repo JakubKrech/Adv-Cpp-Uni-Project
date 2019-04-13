@@ -11,7 +11,6 @@ void Grid::initializeCells()
 	std::uniform_int_distribution<int> uniform_dist(20, 255);
 	int R = uniform_dist(e1);
 	std::cout << "Randomized R color value: " <<  R << std::endl;
-	//cool R values: 23, 227
 
 	for (auto x = 0; x < gridWidth; x++) {
 		for (auto y = 0; y < gridHeight; y++) {
@@ -93,70 +92,6 @@ void Grid::calculateNextStep()
 			}
 		}
 	}
-}
-
-void Grid::spawnGlider(int xx, int yy) // to be removed
-{
-	cellGrid[xx][yy].setNextState(true);
-	cellGrid[xx + 1][yy].setNextState(true);
-	cellGrid[xx + 2][yy].setNextState(true);
-	cellGrid[xx + 2][yy - 1].setNextState(true);
-	cellGrid[xx + 1][yy - 2].setNextState(true);
-}
-
-void Grid::spawnFrog(int xx, int yy) // to be removed
-{
-	cellGrid[xx][yy].setNextState(true);
-	cellGrid[xx][yy + 1].setNextState(true);
-	cellGrid[xx][yy + 2].setNextState(true);
-	cellGrid[xx + 1][yy + 1].setNextState(true);
-	cellGrid[xx + 1][yy + 2].setNextState(true);
-	cellGrid[xx + 1][yy + 3].setNextState(true);
-}
-
-void Grid::spawnCopperhead(int xx, int yy) // to be removed
-{
-	cellGrid[xx + 5][yy].setNextState(true);
-	
-	cellGrid[xx + 5][yy + 1].setNextState(true);
-
-	cellGrid[xx + 6][yy + 2].setNextState(true);
-	cellGrid[xx + 9][yy + 2].setNextState(true);
-
-	cellGrid[xx + 4][yy + 3].setNextState(true);
-	cellGrid[xx + 5][yy + 3].setNextState(true);
-	cellGrid[xx + 6][yy + 3].setNextState(true);
-	cellGrid[xx + 8][yy + 3].setNextState(true);
-	cellGrid[xx + 9][yy + 3].setNextState(true);
-	cellGrid[xx + 11][yy + 3].setNextState(true);
-
-	cellGrid[xx][yy + 4].setNextState(true);
-	cellGrid[xx + 1][yy + 4].setNextState(true);
-	cellGrid[xx + 8][yy + 4].setNextState(true);
-	cellGrid[xx + 9][yy + 4].setNextState(true);
-	cellGrid[xx + 11][yy + 4].setNextState(true);
-	cellGrid[xx + 12][yy + 4].setNextState(true);
-
-	cellGrid[xx][yy + 5].setNextState(true);
-	cellGrid[xx + 1][yy + 5].setNextState(true);
-	cellGrid[xx + 8][yy + 5].setNextState(true);
-	cellGrid[xx + 9][yy + 5].setNextState(true);
-	cellGrid[xx + 11][yy + 5].setNextState(true);
-	cellGrid[xx + 12][yy + 5].setNextState(true);
-
-	cellGrid[xx + 4][yy + 6].setNextState(true);
-	cellGrid[xx + 5][yy + 6].setNextState(true);
-	cellGrid[xx + 6][yy + 6].setNextState(true);
-	cellGrid[xx + 8][yy + 6].setNextState(true);
-	cellGrid[xx + 9][yy + 6].setNextState(true);
-	cellGrid[xx + 11][yy + 6].setNextState(true);
-
-	cellGrid[xx + 6][yy + 7].setNextState(true);
-	cellGrid[xx + 9][yy + 7].setNextState(true);
-
-	cellGrid[xx + 5][yy + 8].setNextState(true);
-
-	cellGrid[xx + 5][yy + 9].setNextState(true);
 }
 
 void Grid::spawnPattern(Pattern pattern, int x, int y)

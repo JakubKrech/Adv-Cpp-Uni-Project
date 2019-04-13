@@ -25,9 +25,6 @@ public:
 	~Grid();
 
 	void calculateNextStep();
-	void spawnGlider(int, int);
-	void spawnFrog(int, int);
-	void spawnCopperhead(int xx, int yy);
 	
 	void spawnPattern(Pattern, int, int);
 };
