@@ -6,12 +6,13 @@
 #include "Cell.h"
 #include "Pattern.h"
 
-
+#define menuWidth 300.f
+#define pixelWidth 800.f
+#define pixelHeight 800.f
+#define cellSize 8.f
 
 class Grid
 {
-	int pixelWidth, pixelHeight;
-	int cellSize;
 	int gridWidth, gridHeight;
 
 	void initializeCells();
@@ -19,9 +20,7 @@ class Grid
 public:
 	std::vector<std::vector<Cell>> cellGrid;
 
-	std::unique_ptr<sf::RenderWindow> window;
-
-	Grid(int, int, int);
+	Grid();
 	~Grid();
 
 	void calculateNextStep();

@@ -1,8 +1,9 @@
-#include "Grid.h"
+#include "..\\include\\Grid.h"
 
 #include <iostream>
 #include <random>
-
+#include "..\\vendor\\Dear_ImGui\\imgui.h"
+#include "..\\vendor\\Dear_ImGui\\imgui-SFML.h"
 
 void Grid::initializeCells()
 {
@@ -47,13 +48,15 @@ void Grid::initializeCells()
 	}
 }
 
-Grid::Grid(int W, int H, int cS): pixelWidth(W), pixelHeight(H), cellSize(cS)
+
+Grid::Grid()
 {
-	gridWidth = pixelWidth / cellSize;
+	gridWidth =  pixelWidth  / cellSize;
 	gridHeight = pixelHeight / cellSize;
 
+	std::cout << gridWidth << " " << gridHeight << std::endl;
+
 	cellGrid.resize(gridWidth);
-	window = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(pixelWidth, pixelHeight), "GameOfLife"));
 
 	initializeCells();
 }

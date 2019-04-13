@@ -15,7 +15,6 @@ public:
 	Cell(sf::Vector2f, sf::Vector2f, int, int, sf::Color);
 	~Cell();
 	
-
 	void setNextState(bool);
 	void updateState();
 };

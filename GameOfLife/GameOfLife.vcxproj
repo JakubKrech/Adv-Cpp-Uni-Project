@@ -23,11 +23,30 @@
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Pattern.cpp" />
+    <ClCompile Include="vendor\Dear_ImGui\imgui-SFML.cpp" />
+    <ClCompile Include="vendor\Dear_ImGui\imgui.cpp" />
+    <ClCompile Include="vendor\Dear_ImGui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\Dear_ImGui\imgui_draw.cpp" />
+    <ClCompile Include="src\windowView.cpp" />
+    <ClCompile Include="src\windowController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Cell.h" />
-    <ClInclude Include="src\Grid.h" />
-    <ClInclude Include="src\Pattern.h" />
+    <ClInclude Include="include\Cell.h" />
+    <ClInclude Include="include\Grid.h" />
+    <ClInclude Include="include\Pattern.h" />
+    <ClInclude Include="vendor\Dear_ImGui\imconfig-SFML.h" />
+    <ClInclude Include="vendor\Dear_ImGui\imconfig.h" />
+    <ClInclude Include="vendor\Dear_ImGui\imgui-SFML.h" />
+    <ClInclude Include="vendor\Dear_ImGui\imgui.h" />
+    <ClInclude Include="vendor\Dear_ImGui\imgui_internal.h" />
+    <ClInclude Include="vendor\Dear_ImGui\stb_rect_pack.h" />
+    <ClInclude Include="vendor\Dear_ImGui\stb_textedit.h" />
+    <ClInclude Include="vendor\Dear_ImGui\stb_truetype.h" />
+    <ClInclude Include="include\windowView.h" />
+    <ClInclude Include="include\windowController.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -98,7 +117,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\GameOfLife\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,7 +146,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\GameOfLife\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
