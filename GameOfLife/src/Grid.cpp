@@ -48,6 +48,18 @@ void Grid::initializeCells()
 	}
 }
 
+void Grid::readPatternsFromRLEFiles(std::string path)
+{
+	for (const auto &entry : fs::directory_iterator(path)) {
+		Pattern newPattern{ entry };
+		this->patterns.insert(std::pair<std::string, Pattern>(newPattern.name, newPattern));
+	}
+
+	// print read patterns
+	for (const auto &x : patterns)
+		std::cout << x.second.name << std::endl;
+}
+
 
 Grid::Grid()
 {
@@ -59,6 +71,7 @@ Grid::Grid()
 	cellGrid.resize(gridWidth);
 
 	initializeCells();
+	readPatternsFromRLEFiles("PatternsRLE");
 }
 
 
@@ -97,13 +110,15 @@ void Grid::calculateNextStep()
 	}
 }
 
-void Grid::spawnPattern(Pattern pattern, int x, int y)
+void Grid::spawnPattern(std::string patternName, int x, int y)
 {
-	for (size_t i = 0; i < pattern.height; i++)
+	Pattern patternToSpawn = patterns.find(patternName)->second;
+
+	for (size_t i = 0; i < patternToSpawn.height; i++)
 	{
-		for (size_t j = 0; j < pattern.width; j++)
+		for (size_t j = 0; j < patternToSpawn.width; j++)
 		{
-			cellGrid[x + i][y + j].nextState = pattern.cellPattern[j][i];
+			cellGrid[x + i][y + j].nextState = patternToSpawn.cellPattern[j][i];
 		}
 	}
 }

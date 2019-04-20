@@ -17,7 +17,15 @@ namespace GOL {
 
 		sf::Event event;
 		sf::Clock deltaClock;
-		bool showHelpMenu = false;
+
+		bool showHelpMenu{ false };
+		bool showFSPMenu{ true };
+
+		bool paused = false;
+
+		void updateMenu();
+		void updateFPSWindow();
+
 	public:
 		int frameRate = 60;
 
