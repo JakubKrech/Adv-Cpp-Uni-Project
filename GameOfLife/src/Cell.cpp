@@ -25,3 +25,19 @@ void Cell::updateState()
 	previousState = nextState;
 }
 
+void Cell::addMemento()
+{
+	this->memento.push_front(this->previousState);
+	if (this->memento.size() > mementoMaxSize) 
+		this->memento.pop_back();
+
+	//std::cout << memento.size() << std::endl;
+}
+
+bool Cell::getMemento()
+{
+	bool state = this->memento.front();
+	this->memento.pop_front();
+	return state;
+}
+

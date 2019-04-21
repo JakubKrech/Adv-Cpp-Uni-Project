@@ -21,7 +21,7 @@ namespace GOL {
 		bool showHelpMenu{ false };
 		bool showFSPMenu{ true };
 
-		bool paused = false;
+		bool paused = true;
 
 		void updateMenu();
 		void updateFPSWindow();
@@ -35,6 +35,7 @@ namespace GOL {
 		~windowView();
 
 		void updateWindowState();
+		void returnToMemento();
 	};
 
 }

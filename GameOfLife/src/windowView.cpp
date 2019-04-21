@@ -80,34 +80,51 @@ void GOL::windowView::updateMenu()
 	ImGui::Begin("Convay's Game of Life", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
 	// WINDOW DESCRIPTION
-	ImGui::Text("Window size in pixels: %.0f x %.0f", pixelWidth, pixelHeight);
+	ImGui::Text("\nGrid size in pixels: %.0f x %.0f", pixelWidth, pixelHeight);
 	ImGui::Text("Cell size in pixels: %.0f x %.0f", cellSize, cellSize);
-	ImGui::Text("Window size in cells: %.0f x %.0f", pixelWidth / cellSize, pixelHeight / cellSize);
+	ImGui::Text("Grid size in cells:  %.0f x %.0f", pixelWidth / cellSize, pixelHeight / cellSize);
 
 	// FLOW CONTROL
-	ImGui::Separator();
+	ImGui::Text("\n"); ImGui::Separator(); ImGui::Text("\n");
+
 	ImGui::AlignTextToFramePadding();
 	ImGui::Text("Flow Control"); ImGui::SameLine();
 	if (ImGui::Button("<<")) {
-		//
+		returnToMemento();
 	};
+
 	ImGui::SameLine();
+
+	if(!paused) ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(11, 151, 9, 190));
+	else ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(89, 102, 156, 158));
 	if (ImGui::Button("Play")) {
+		
 		if (paused) paused = false;
+		
 	};
+	ImGui::PopStyleColor();
+
 	ImGui::SameLine();
+	
+	if (paused) ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(161, 20, 20, 190));
+	else ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(89, 102, 156, 158));
 	if (ImGui::Button("Stop")) {
 		
 		if (!paused) paused = true;
 	};
+	ImGui::PopStyleColor();
+
 	ImGui::SameLine();
+	
 	if (ImGui::Button(">>")) {
 		grid->calculateNextStep();
 	};
 	ImGui::SliderInt("Frame Rate", &frameRate, 1, 144);
+	ImGui::Text("Eras saved in memento: %i", grid->cellGrid[0][0].memento.size());
 	
 	//SPAWNING PATTERNS
-	ImGui::Separator();
+	ImGui::Text("\n"); ImGui::Separator(); ImGui::Text("\n");
+
 	ImGui::Text("Choose Pattern to spawn...");
 
 	std::vector<std::string> patternsNames;
@@ -124,26 +141,23 @@ void GOL::windowView::updateMenu()
 	ImGui::Text("Name: %s", choosenPattern.name.c_str());
 	ImGui::Text("Size: %i x %i", choosenPattern.width, choosenPattern.height);
 
-
-	
-
 	ImGuiIO& io = ImGui::GetIO();
-	//for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) {
 	if (ImGui::IsMouseClicked(0)) {
 		if (ImGui::GetIO().MousePos.x / cellSize >= 0 &&
 			ImGui::GetIO().MousePos.x / cellSize <= pixelWidth / cellSize &&
 			ImGui::GetIO().MousePos.y / cellSize >= 0 &&
 			ImGui::GetIO().MousePos.y / cellSize <= pixelHeight / cellSize)
 		{
+			if (grid->eraCounter == 0 && paused == true) paused = false;
 
 			grid->spawnPattern(patternsNames[listbox_item_current], 
 				ImGui::GetIO().MousePos.x / cellSize, ImGui::GetIO().MousePos.y / cellSize);
 			if(paused) grid->calculateNextStep();
 		}
 	}
-	//}
 
-	ImGui::Separator();
+	ImGui::Text("\n"); ImGui::Separator(); ImGui::Text("\n");
+	
 	if (ImGui::Button("Clear grid")) {
 		for (auto x = 0; x < grid->cellGrid.size(); x++) {
 			for (auto y = 0; y < grid->cellGrid[0].size(); y++) {
@@ -151,7 +165,9 @@ void GOL::windowView::updateMenu()
 				grid->cellGrid[x][y].previousState = false;
 			}
 		}
-		if (paused) grid->calculateNextStep();
+		grid->calculateNextStep();
+		paused = true;
+		grid->eraCounter = 0;
 	}; 
 	ImGui::SameLine();
 	if (ImGui::Button("Show Window Help")) {
@@ -159,8 +175,6 @@ void GOL::windowView::updateMenu()
 		else showHelpMenu = true;
 	}; 
 	
-
-
 	ImGui::End();
 
 	this->window->setFramerateLimit(frameRate);
@@ -183,10 +197,11 @@ void GOL::windowView::updateFPSWindow()
 
 	if (ImGui::Begin("FpsWindow", &showFSPMenu, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings))
 	{
-		ImGui::Text("FPS: %.1f   Mouse Cell Position: (%.0f,%.0f)", 
+		ImGui::Text("FPS: %5.1f   Mouse Cell Position: (%3.0f,%3.0f)   Era: %i",
 			ImGui::GetIO().Framerate,
 			ImGui::GetIO().MousePos.x / cellSize,
-			ImGui::GetIO().MousePos.y / cellSize);
+			ImGui::GetIO().MousePos.y / cellSize,
+			grid->eraCounter);
 		//ImGui::Separator();
 
 		if (ImGui::BeginPopupContextWindow())
@@ -200,4 +215,19 @@ void GOL::windowView::updateFPSWindow()
 		ImGui::End();
 	}
 	ImGui::PopStyleColor();
+}
+
+void GOL::windowView::returnToMemento()
+{
+	if (grid->cellGrid[0][0].memento.size() > 0) {
+		if (paused == false) paused = true;
+
+		for (auto x = 0; x < grid->cellGrid.size(); x++) {
+			for (auto y = 0; y < grid->cellGrid[0].size(); y++) {
+				grid->cellGrid[x][y].setNextState(grid->cellGrid[x][y].getMemento());
+				grid->cellGrid[x][y].updateState();
+			}
+		}
+		--grid->eraCounter;
+	}
 }

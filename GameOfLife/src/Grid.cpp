@@ -72,6 +72,8 @@ Grid::Grid()
 
 	initializeCells();
 	readPatternsFromRLEFiles("PatternsRLE");
+
+	eraCounter = 0;
 }
 
 
@@ -102,12 +104,17 @@ void Grid::calculateNextStep()
 
 	for (auto x = 0; x < gridWidth; x++) {
 		for (auto y = 0; y < gridHeight; y++) {
+
+			cellGrid[x][y].addMemento();
+
 			if (cellGrid[x][y].previousState != cellGrid[x][y].nextState) {
 
 				cellGrid[x][y].updateState();
 			}
 		}
 	}
+
+	++eraCounter;
 }
 
 void Grid::spawnPattern(std::string patternName, int x, int y)

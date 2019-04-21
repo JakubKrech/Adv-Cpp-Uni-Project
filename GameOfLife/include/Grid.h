@@ -24,6 +24,8 @@ public:
 	std::vector<std::vector<Cell>> cellGrid;
 	std::map<std::string, Pattern> patterns;
 
+	int eraCounter;
+
 	Grid();
 	~Grid();
 
