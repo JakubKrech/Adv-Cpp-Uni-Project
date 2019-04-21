@@ -21,12 +21,12 @@ int main()
 	GOL::windowView wView{ &grid };
 	GOL::windowController wController{ &grid, &wView };
 
-	grid.spawnPattern("Copperhead", 10, 10);
+	/*grid.spawnPattern("Copperhead", 10, 10);
 	grid.spawnPattern("Copperhead", 25, 25);
 	grid.spawnPattern("Copperhead", 40, 40);
 	grid.spawnPattern("Copperhead", 55, 55);
 	grid.spawnPattern("Copperhead", 70, 70);
-	grid.spawnPattern("Copperhead", 85, 85);
+	grid.spawnPattern("Copperhead", 85, 85);*/
 
 	wController.startGameOfLife();
 

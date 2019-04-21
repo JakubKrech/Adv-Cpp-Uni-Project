@@ -1,5 +1,30 @@
 #include "..\\include\\windowView.h"
 
+namespace ImGui
+{
+	static auto vector_getter = [](void* vec, int idx, const char** out_text)
+	{
+		auto& vector = *static_cast<std::vector<std::string>*>(vec);
+		if (idx < 0 || idx >= static_cast<int>(vector.size())) { return false; }
+		*out_text = vector.at(idx).c_str();
+		return true;
+	};
+
+	bool Combo(const char* label, int* currIndex, std::vector<std::string>& values)
+	{
+		if (values.empty()) { return false; }
+		return Combo(label, currIndex, vector_getter,
+			static_cast<void*>(&values), values.size());
+	}
+
+	bool ListBox(const char* label, int* currIndex, std::vector<std::string>& values)
+	{
+		if (values.empty()) { return false; }
+		return ListBox(label, currIndex, vector_getter,
+			static_cast<void*>(&values), values.size());
+	}
+
+}
 
 
 GOL::windowView::windowView(Grid *g) : grid{ g }
@@ -54,11 +79,13 @@ void GOL::windowView::updateMenu()
 {
 	ImGui::Begin("Convay's Game of Life", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
-	if (ImGui::Button("Show Window Help")) {
-		if (showHelpMenu) showHelpMenu = false;
-		else showHelpMenu = true;
-	};
-	ImGui::Separator(); // FLOW CONTROL
+	// WINDOW DESCRIPTION
+	ImGui::Text("Window size in pixels: %.0f x %.0f", pixelWidth, pixelHeight);
+	ImGui::Text("Cell size in pixels: %.0f x %.0f", cellSize, cellSize);
+	ImGui::Text("Window size in cells: %.0f x %.0f", pixelWidth / cellSize, pixelHeight / cellSize);
+
+	// FLOW CONTROL
+	ImGui::Separator();
 	ImGui::AlignTextToFramePadding();
 	ImGui::Text("Flow Control"); ImGui::SameLine();
 	if (ImGui::Button("<<")) {
@@ -70,6 +97,7 @@ void GOL::windowView::updateMenu()
 	};
 	ImGui::SameLine();
 	if (ImGui::Button("Stop")) {
+		
 		if (!paused) paused = true;
 	};
 	ImGui::SameLine();
@@ -78,10 +106,60 @@ void GOL::windowView::updateMenu()
 	};
 	ImGui::SliderInt("Frame Rate", &frameRate, 1, 144);
 	
-	ImGui::Separator(); //SPAWNING PATTERNS
+	//SPAWNING PATTERNS
+	ImGui::Separator();
 	ImGui::Text("Choose Pattern to spawn...");
 
+	std::vector<std::string> patternsNames;
+	for each (auto patPair in grid->patterns)
+	{
+		patternsNames.push_back(patPair.first);
+	}
+	static int listbox_item_current = 1;
+	ImGui::ListBox("listbox\n(single select)", &listbox_item_current, patternsNames);
 	ImGui::Text("...and click on grid to spawn it.");
+
+	ImGui::Text("\nCurrently choosen Pattern");
+	Pattern choosenPattern = grid->patterns.find(patternsNames[listbox_item_current])->second;
+	ImGui::Text("Name: %s", choosenPattern.name.c_str());
+	ImGui::Text("Size: %i x %i", choosenPattern.width, choosenPattern.height);
+
+
+	
+
+	ImGuiIO& io = ImGui::GetIO();
+	//for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) {
+	if (ImGui::IsMouseClicked(0)) {
+		if (ImGui::GetIO().MousePos.x / cellSize >= 0 &&
+			ImGui::GetIO().MousePos.x / cellSize <= pixelWidth / cellSize &&
+			ImGui::GetIO().MousePos.y / cellSize >= 0 &&
+			ImGui::GetIO().MousePos.y / cellSize <= pixelHeight / cellSize)
+		{
+
+			grid->spawnPattern(patternsNames[listbox_item_current], 
+				ImGui::GetIO().MousePos.x / cellSize, ImGui::GetIO().MousePos.y / cellSize);
+			if(paused) grid->calculateNextStep();
+		}
+	}
+	//}
+
+	ImGui::Separator();
+	if (ImGui::Button("Clear grid")) {
+		for (auto x = 0; x < grid->cellGrid.size(); x++) {
+			for (auto y = 0; y < grid->cellGrid[0].size(); y++) {
+				grid->cellGrid[x][y].nextState = false;
+				grid->cellGrid[x][y].previousState = false;
+			}
+		}
+		if (paused) grid->calculateNextStep();
+	}; 
+	ImGui::SameLine();
+	if (ImGui::Button("Show Window Help")) {
+		if (showHelpMenu) showHelpMenu = false;
+		else showHelpMenu = true;
+	}; 
+	
+
 
 	ImGui::End();
 

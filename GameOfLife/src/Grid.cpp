@@ -113,12 +113,22 @@ void Grid::calculateNextStep()
 void Grid::spawnPattern(std::string patternName, int x, int y)
 {
 	Pattern patternToSpawn = patterns.find(patternName)->second;
+	int xx, yy;
 
 	for (size_t i = 0; i < patternToSpawn.height; i++)
 	{
 		for (size_t j = 0; j < patternToSpawn.width; j++)
 		{
-			cellGrid[x + i][y + j].nextState = patternToSpawn.cellPattern[j][i];
+			xx = x + i;
+			yy = y + j;
+
+			if (xx >= pixelWidth / cellSize) xx -= pixelWidth / cellSize;
+			//else if (xx < 0) xx += pixelWidth;
+
+			if (yy >= pixelHeight / cellSize) yy -= pixelHeight / cellSize;
+			//else if (yy < 0) yy += pixelHeight;
+
+			cellGrid[xx][yy].nextState = patternToSpawn.cellPattern[j][i];
 		}
 	}
 }

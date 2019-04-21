@@ -9,7 +9,7 @@
 #define menuWidth 300.f
 #define pixelWidth 800.f
 #define pixelHeight 800.f
-#define cellSize 8.f
+#define cellSize 4.f
 
 class Grid
 {
